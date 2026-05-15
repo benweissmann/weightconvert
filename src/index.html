@@ -13,21 +13,15 @@
 <body>
   <div class="app">
 
-    <header class="app-header">
-      <div class="header-left">
-        <span class="wordmark">WeightConvert</span>
-        <span class="subhead">ingredient weights in grams</span>
-      </div>
-      <!-- Small SLM status indicator — shows model download/ready state -->
-      <div class="slm-status" id="slmStatus" title="Language model status">
-        <svg class="slm-icon slm-icon-ready" width="15" height="15" viewBox="0 0 15 15" fill="none">
-          <path d="M7.5 1l1.6 4.9L14 7.5l-4.9 1.6L7.5 14l-1.6-4.9L1 7.5l4.9-1.6z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
-        </svg>
-        <svg class="slm-icon slm-icon-loading" width="15" height="15" viewBox="0 0 15 15" fill="none">
-          <circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="20 15" stroke-linecap="round"/>
-        </svg>
-      </div>
-    </header>
+    <!-- SLM status icon — top-right corner only -->
+    <div class="slm-status" id="slmStatus" title="Language model status">
+      <svg class="slm-icon slm-icon-ready" width="15" height="15" viewBox="0 0 15 15" fill="none">
+        <path d="M7.5 1l1.6 4.9L14 7.5l-4.9 1.6L7.5 14l-1.6-4.9L1 7.5l4.9-1.6z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+      </svg>
+      <svg class="slm-icon slm-icon-loading" width="15" height="15" viewBox="0 0 15 15" fill="none">
+        <circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="20 15" stroke-linecap="round"/>
+      </svg>
+    </div>
 
     <main class="stage" id="stage">
 
@@ -38,7 +32,7 @@
           e.g.
           <button class="example-chip" data-value="1 cup flour">1 cup flour</button>
           <button class="example-chip" data-value="2 tbsp honey">2 tbsp honey</button>
-          <button class="example-chip" data-value="1T demarera">1T demarera</button>
+          <button class="example-chip" data-value="2 tbsp sweet con milk">2 tbsp sweet con milk</button>
         </p>
       </div>
 

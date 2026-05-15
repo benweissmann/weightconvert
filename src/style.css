@@ -39,41 +39,17 @@ body {
   padding: 0 24px;
 }
 
-/* ─── Header ───────────────────────────────────────────────────────────────── */
-.app-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 28px 0 0;
-  flex-shrink: 0;
-}
-.header-left {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-}
-.wordmark {
-  font-family: var(--font-display);
-  font-size: 1.05rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--ink);
-}
-.subhead {
-  font-size: 0.72rem;
-  font-weight: 300;
-  color: var(--ink-faint);
-  letter-spacing: 0.03em;
-}
-/* ─── SLM status indicator ─────────────────────────────────────────────────── */
+/* ─── SLM status indicator — fixed top-right ──────────────────────────────── */
 .slm-status {
+  position: fixed;
+  top: 14px;
+  right: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 26px;
   height: 26px;
-  flex-shrink: 0;
+  z-index: 10;
 }
 .slm-icon { display: none; }
 /* loading state: show spinner, hide star */
@@ -241,6 +217,14 @@ body {
   flex-shrink: 0;
   margin-bottom: 8px;
 }
+
+/* When open: panel scrolls internally so the summary (close button) is always
+   visible at the top via position:sticky, even if content overflows. */
+.debug-panel[open] {
+  max-height: 60vh;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
 .debug-panel[open] .chevron { transform: rotate(180deg); }
 .chevron { transition: transform 0.2s ease; flex-shrink: 0; }
 
@@ -253,6 +237,14 @@ body {
   list-style: none;
   user-select: none;
   color: var(--ink-muted);
+  /* Sticky within the scrollable panel so close button stays visible */
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 1;
+  margin: 0 -24px;
+  padding-left: 24px;
+  padding-right: 24px;
 }
 .debug-toggle::-webkit-details-marker { display: none; }
 .debug-toggle-label {
@@ -463,5 +455,12 @@ body {
 /* ─── Desktop refinements ──────────────────────────────────────────────────── */
 @media (min-width: 540px) {
   .app { padding: 0 36px; }
-  .app-header { padding-top: 36px; }
 }
+
+/* ─── Keyboard-open: compact layout so result stays visible ────────────────── */
+/* Applied via JS (visualViewport resize) when the software keyboard is open. */
+body.keyboard-open .stage          { padding-top: 4px; padding-bottom: 4px; }
+body.keyboard-open .prompt-hint    { font-size: 1.2rem; }
+body.keyboard-open .gram-number    { font-size: clamp(48px, 14vw, 72px); }
+body.keyboard-open .ingredient-resolved { font-size: 1.1rem; }
+body.keyboard-open .debug-panel[open] { max-height: 40vh; }

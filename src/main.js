@@ -357,6 +357,19 @@ document.querySelectorAll('.example-chip').forEach(btn => {
   })
 })
 
+// ─── Keyboard detection ───────────────────────────────────────────────────────
+// When the software keyboard opens, the visual viewport shrinks. Detect this
+// and apply .keyboard-open to compact the layout so the result stays visible.
+if (window.visualViewport) {
+  const baseHeight = window.visualViewport.height
+  window.visualViewport.addEventListener('resize', () => {
+    document.body.classList.toggle(
+      'keyboard-open',
+      window.visualViewport.height < baseHeight * 0.8
+    )
+  })
+}
+
 // ─── Init ─────────────────────────────────────────────────────────────────────
 showState('empty')
 debugPanel.hidden = true
