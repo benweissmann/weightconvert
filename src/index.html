@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#F7F3ED" />
+  <title>WeightConvert</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="app">
+
+    <header class="app-header">
+      <div class="header-left">
+        <span class="wordmark">WeightConvert</span>
+        <span class="subhead">ingredient weights in grams</span>
+      </div>
+      <!-- Small SLM status indicator — shows model download/ready state -->
+      <div class="slm-status" id="slmStatus" title="Language model status">
+        <svg class="slm-icon slm-icon-ready" width="15" height="15" viewBox="0 0 15 15" fill="none">
+          <path d="M7.5 1l1.6 4.9L14 7.5l-4.9 1.6L7.5 14l-1.6-4.9L1 7.5l4.9-1.6z" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round"/>
+        </svg>
+        <svg class="slm-icon slm-icon-loading" width="15" height="15" viewBox="0 0 15 15" fill="none">
+          <circle cx="7.5" cy="7.5" r="5.5" stroke="currentColor" stroke-width="1.5" stroke-dasharray="20 15" stroke-linecap="round"/>
+        </svg>
+      </div>
+    </header>
+
+    <main class="stage" id="stage">
+
+      <!-- Empty state -->
+      <div class="state-empty" id="stateEmpty">
+        <p class="prompt-hint">Type an ingredient<br/>or tap the mic</p>
+        <p class="prompt-example">
+          e.g.
+          <button class="example-chip" data-value="1 cup flour">1 cup flour</button>
+          <button class="example-chip" data-value="2 tbsp honey">2 tbsp honey</button>
+          <button class="example-chip" data-value="1T demarera">1T demarera</button>
+        </p>
+      </div>
+
+      <!-- Result -->
+      <div class="state-result" id="stateResult" hidden>
+        <div class="gram-display">
+          <span class="gram-number" id="gramNumber">0</span><span class="gram-unit">g</span>
+        </div>
+        <div class="ingredient-resolved" id="ingredientResolved"></div>
+        <div class="parse-tokens" id="parseTokens"></div>
+        <!-- Source icon: grid = deterministic, sparkle = SLM -->
+        <div class="source-badge" id="sourceBadge"></div>
+      </div>
+
+      <!-- Error -->
+      <div class="state-error" id="stateError" hidden>
+        <p class="error-message">Couldn't parse that —<br/>try <em>1 cup flour</em></p>
+      </div>
+
+    </main>
+
+    <!-- Transparency panel -->
+    <details class="debug-panel" id="debugPanel">
+      <summary class="debug-toggle">
+        <span class="debug-toggle-label">How it parsed this</span>
+        <svg class="chevron" width="14" height="14" viewBox="0 0 14 14" fill="none">
+          <path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </summary>
+      <div class="debug-body">
+
+        <div class="debug-section">
+          <div class="debug-section-header">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <rect x=".75" y=".75" width="4.5" height="4.5" rx=".75" stroke="currentColor" stroke-width="1.2"/>
+              <rect x="6.75" y=".75" width="4.5" height="4.5" rx=".75" stroke="currentColor" stroke-width="1.2"/>
+              <rect x=".75" y="6.75" width="4.5" height="4.5" rx=".75" stroke="currentColor" stroke-width="1.2"/>
+              <rect x="6.75" y="6.75" width="4.5" height="4.5" rx=".75" stroke="currentColor" stroke-width="1.2"/>
+            </svg>
+            Deterministic
+          </div>
+          <dl class="debug-grid" id="debugGrid"></dl>
+          <div class="debug-source" id="debugSource"></div>
+          <div class="debug-candidates" id="debugCandidates"></div>
+        </div>
+
+        <div class="debug-section">
+          <div class="debug-section-header">
+            <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+              <path d="M6 .5l1.2 3.8L11 6l-3.8 1.2L6 11l-1.2-3.8L1 6l3.8-1.2z" stroke="currentColor" stroke-width="1.2" stroke-linejoin="round"/>
+            </svg>
+            Language Model
+          </div>
+          <div class="debug-slm" id="debugSlm">
+            <span class="debug-slm-idle">—</span>
+          </div>
+        </div>
+
+      </div>
+    </details>
+
+    <!-- Input bar -->
+    <footer class="input-bar">
+      <div class="input-wrap">
+        <input
+          type="text"
+          id="ingredientInput"
+          class="ingredient-input"
+          placeholder="1 cup flour…"
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+          enterkeyhint="done"
+        />
+        <button class="mic-btn" id="micBtn" aria-label="Speak ingredient" title="Speak">
+          <svg class="mic-icon mic-idle" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="7" y="2" width="6" height="10" rx="3" stroke="currentColor" stroke-width="1.6"/>
+            <path d="M4 10a6 6 0 0012 0" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+            <line x1="10" y1="16" x2="10" y2="19" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+          </svg>
+          <svg class="mic-icon mic-stop" width="20" height="20" viewBox="0 0 20 20" fill="none">
+            <rect x="5" y="5" width="10" height="10" rx="2" fill="currentColor"/>
+          </svg>
+        </button>
+      </div>
+    </footer>
+
+  </div>
+
+  <script type="module" src="./main.js"></script>
+</body>
+</html>

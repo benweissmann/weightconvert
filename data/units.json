@@ -1,0 +1,436 @@
+{
+  "units": [
+    {
+      "canonical": "cup",
+      "ml": 236.588,
+      "aliases": [
+        "cup",
+        "cups",
+        "c",
+        "C"
+      ]
+    },
+    {
+      "canonical": "tablespoon",
+      "ml": 14.787,
+      "aliases": [
+        "tablespoon",
+        "tablespoons",
+        "tbsp",
+        "tbsps",
+        "T",
+        "tbs"
+      ]
+    },
+    {
+      "canonical": "stick",
+      "ml": 118.294,
+      "aliases": [
+        "stick",
+        "sticks"
+      ]
+    },
+    {
+      "canonical": "teaspoon",
+      "ml": 4.929,
+      "aliases": [
+        "teaspoon",
+        "teaspoons",
+        "tsp",
+        "tsps",
+        "t"
+      ]
+    },
+    {
+      "canonical": "fluid_ounce",
+      "ml": 29.574,
+      "aliases": [
+        "fluid ounce",
+        "fluid ounces",
+        "fl oz",
+        "fl. oz",
+        "floz",
+        "fl oz."
+      ]
+    },
+    {
+      "canonical": "liter",
+      "ml": 1000,
+      "aliases": [
+        "liter",
+        "liters",
+        "litre",
+        "litres",
+        "l",
+        "L"
+      ]
+    },
+    {
+      "canonical": "milliliter",
+      "ml": 1,
+      "aliases": [
+        "milliliter",
+        "milliliters",
+        "millilitre",
+        "millilitres",
+        "ml",
+        "mL"
+      ]
+    },
+    {
+      "canonical": "pint",
+      "ml": 473.176,
+      "aliases": [
+        "pint",
+        "pints",
+        "pt"
+      ]
+    },
+    {
+      "canonical": "quart",
+      "ml": 946.353,
+      "aliases": [
+        "quart",
+        "quarts",
+        "qt"
+      ]
+    },
+    {
+      "canonical": "gallon",
+      "ml": 3785.41,
+      "aliases": [
+        "gallon",
+        "gallons",
+        "gal"
+      ]
+    },
+    {
+      "canonical": "gram",
+      "ml": null,
+      "massG": 1,
+      "aliases": [
+        "gram",
+        "grams",
+        "g"
+      ]
+    },
+    {
+      "canonical": "kilogram",
+      "ml": null,
+      "massG": 1000,
+      "aliases": [
+        "kilogram",
+        "kilograms",
+        "kg"
+      ]
+    },
+    {
+      "canonical": "ounce",
+      "ml": null,
+      "massG": 28.3495,
+      "aliases": [
+        "ounce",
+        "ounces",
+        "oz"
+      ]
+    },
+    {
+      "canonical": "pound",
+      "ml": null,
+      "massG": 453.592,
+      "aliases": [
+        "pound",
+        "pounds",
+        "lb",
+        "lbs"
+      ]
+    }
+  ],
+  "lookup": {
+    "cup": {
+      "canonical": "cup",
+      "ml": 236.588,
+      "massG": null
+    },
+    "cups": {
+      "canonical": "cup",
+      "ml": 236.588,
+      "massG": null
+    },
+    "c": {
+      "canonical": "cup",
+      "ml": 236.588,
+      "massG": null
+    },
+    "C": {
+      "canonical": "cup",
+      "ml": 236.588,
+      "massG": null
+    },
+    "tablespoon": {
+      "canonical": "tablespoon",
+      "ml": 14.787,
+      "massG": null
+    },
+    "tablespoons": {
+      "canonical": "tablespoon",
+      "ml": 14.787,
+      "massG": null
+    },
+    "tbsp": {
+      "canonical": "tablespoon",
+      "ml": 14.787,
+      "massG": null
+    },
+    "tbsps": {
+      "canonical": "tablespoon",
+      "ml": 14.787,
+      "massG": null
+    },
+    "T": {
+      "canonical": "tablespoon",
+      "ml": 14.787,
+      "massG": null
+    },
+    "tbs": {
+      "canonical": "tablespoon",
+      "ml": 14.787,
+      "massG": null
+    },
+    "stick": {
+      "canonical": "stick",
+      "ml": 118.294,
+      "massG": null
+    },
+    "sticks": {
+      "canonical": "stick",
+      "ml": 118.294,
+      "massG": null
+    },
+    "teaspoon": {
+      "canonical": "teaspoon",
+      "ml": 4.929,
+      "massG": null
+    },
+    "teaspoons": {
+      "canonical": "teaspoon",
+      "ml": 4.929,
+      "massG": null
+    },
+    "tsp": {
+      "canonical": "teaspoon",
+      "ml": 4.929,
+      "massG": null
+    },
+    "tsps": {
+      "canonical": "teaspoon",
+      "ml": 4.929,
+      "massG": null
+    },
+    "t": {
+      "canonical": "teaspoon",
+      "ml": 4.929,
+      "massG": null
+    },
+    "fluid ounce": {
+      "canonical": "fluid_ounce",
+      "ml": 29.574,
+      "massG": null
+    },
+    "fluid ounces": {
+      "canonical": "fluid_ounce",
+      "ml": 29.574,
+      "massG": null
+    },
+    "fl oz": {
+      "canonical": "fluid_ounce",
+      "ml": 29.574,
+      "massG": null
+    },
+    "fl. oz": {
+      "canonical": "fluid_ounce",
+      "ml": 29.574,
+      "massG": null
+    },
+    "floz": {
+      "canonical": "fluid_ounce",
+      "ml": 29.574,
+      "massG": null
+    },
+    "fl oz.": {
+      "canonical": "fluid_ounce",
+      "ml": 29.574,
+      "massG": null
+    },
+    "liter": {
+      "canonical": "liter",
+      "ml": 1000,
+      "massG": null
+    },
+    "liters": {
+      "canonical": "liter",
+      "ml": 1000,
+      "massG": null
+    },
+    "litre": {
+      "canonical": "liter",
+      "ml": 1000,
+      "massG": null
+    },
+    "litres": {
+      "canonical": "liter",
+      "ml": 1000,
+      "massG": null
+    },
+    "l": {
+      "canonical": "liter",
+      "ml": 1000,
+      "massG": null
+    },
+    "L": {
+      "canonical": "liter",
+      "ml": 1000,
+      "massG": null
+    },
+    "milliliter": {
+      "canonical": "milliliter",
+      "ml": 1,
+      "massG": null
+    },
+    "milliliters": {
+      "canonical": "milliliter",
+      "ml": 1,
+      "massG": null
+    },
+    "millilitre": {
+      "canonical": "milliliter",
+      "ml": 1,
+      "massG": null
+    },
+    "millilitres": {
+      "canonical": "milliliter",
+      "ml": 1,
+      "massG": null
+    },
+    "ml": {
+      "canonical": "milliliter",
+      "ml": 1,
+      "massG": null
+    },
+    "mL": {
+      "canonical": "milliliter",
+      "ml": 1,
+      "massG": null
+    },
+    "pint": {
+      "canonical": "pint",
+      "ml": 473.176,
+      "massG": null
+    },
+    "pints": {
+      "canonical": "pint",
+      "ml": 473.176,
+      "massG": null
+    },
+    "pt": {
+      "canonical": "pint",
+      "ml": 473.176,
+      "massG": null
+    },
+    "quart": {
+      "canonical": "quart",
+      "ml": 946.353,
+      "massG": null
+    },
+    "quarts": {
+      "canonical": "quart",
+      "ml": 946.353,
+      "massG": null
+    },
+    "qt": {
+      "canonical": "quart",
+      "ml": 946.353,
+      "massG": null
+    },
+    "gallon": {
+      "canonical": "gallon",
+      "ml": 3785.41,
+      "massG": null
+    },
+    "gallons": {
+      "canonical": "gallon",
+      "ml": 3785.41,
+      "massG": null
+    },
+    "gal": {
+      "canonical": "gallon",
+      "ml": 3785.41,
+      "massG": null
+    },
+    "gram": {
+      "canonical": "gram",
+      "ml": null,
+      "massG": 1
+    },
+    "grams": {
+      "canonical": "gram",
+      "ml": null,
+      "massG": 1
+    },
+    "g": {
+      "canonical": "gram",
+      "ml": null,
+      "massG": 1
+    },
+    "kilogram": {
+      "canonical": "kilogram",
+      "ml": null,
+      "massG": 1000
+    },
+    "kilograms": {
+      "canonical": "kilogram",
+      "ml": null,
+      "massG": 1000
+    },
+    "kg": {
+      "canonical": "kilogram",
+      "ml": null,
+      "massG": 1000
+    },
+    "ounce": {
+      "canonical": "ounce",
+      "ml": null,
+      "massG": 28.3495
+    },
+    "ounces": {
+      "canonical": "ounce",
+      "ml": null,
+      "massG": 28.3495
+    },
+    "oz": {
+      "canonical": "ounce",
+      "ml": null,
+      "massG": 28.3495
+    },
+    "pound": {
+      "canonical": "pound",
+      "ml": null,
+      "massG": 453.592
+    },
+    "pounds": {
+      "canonical": "pound",
+      "ml": null,
+      "massG": 453.592
+    },
+    "lb": {
+      "canonical": "pound",
+      "ml": null,
+      "massG": 453.592
+    },
+    "lbs": {
+      "canonical": "pound",
+      "ml": null,
+      "massG": 453.592
+    }
+  }
+}

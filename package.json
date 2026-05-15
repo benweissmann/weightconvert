@@ -1,0 +1,31 @@
+{
+  "name": "weightconvert",
+  "version": "0.1.0",
+  "description": "Convert ingredient quantities to grams",
+  "type": "module",
+  "engines": {
+    "node": ">=26",
+    "pnpm": ">=11"
+  },
+  "scripts": {
+    "build:units": "node scripts/build-units.js",
+    "build:scrape": "node scripts/scrape.js",
+    "build:aliases": "node scripts/gen-aliases.js",
+    "build:training": "node scripts/gen-training.js",
+    "build:data": "pnpm run build:scrape && pnpm run build:aliases",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "eval": "node scripts/eval.js",
+    "test": "node scripts/eval.js"
+  },
+  "packageManager": "pnpm@11.1.2",
+  "dependencies": {
+    "@mlc-ai/web-llm": "^0.2.83",
+    "cheerio": "^1.2.0",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "vite": "^8.0.12"
+  }
+}

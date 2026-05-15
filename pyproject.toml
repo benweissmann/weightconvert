@@ -1,0 +1,23 @@
+[project]
+name = "weightconvert-finetune"
+version = "0.1.0"
+description = "Fine-tuning pipeline for weightconvert Pipeline B"
+requires-python = ">=3.11,<3.14"
+dependencies = [
+    "torch>=2.1",
+    "transformers>=4.40",
+    "datasets>=2.18",
+    "trl>=1.0",
+    "peft>=0.10",
+    "accelerate>=0.28",
+]
+
+[tool.uv]
+exclude-newer = "5 days"
+no-build = true
+no-binary-package = ["weightconvert-finetune"]
+
+[dependency-groups]
+# mlc-llm is not on PyPI; install separately before running convert_to_mlc.sh:
+#   uv pip install --find-links https://mlc.ai/wheels mlc-llm
+mlc = []

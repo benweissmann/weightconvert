@@ -1,0 +1,29 @@
+FROM python:3.11-slim
+
+RUN pip install --pre -U -f https://mlc.ai/wheels \
+      mlc-llm-nightly-cpu mlc-ai-nightly-cpu tvm pytest
+
+RUN apt-get update -qq \
+    && apt-get install -y --no-install-recommends libx11-6 libvulkan1 \
+    && rm -rf /var/lib/apt/lists/*
+
+# Single symlink in the system lib dir so libtvm.so resolves to the same inode
+# that tvm's Python package already loads — prevents duplicate FFI registration.
+RUN python -c "import tvm.runtime, os; p = os.path.join(os.path.dirname(tvm.runtime.__file__), '__init__.py'); open(p,'a').write('\nShapeTuple = tuple  # compat shim\n')"
+
+RUN ln -s /usr/local/lib/python3.11/site-packages/mlc_llm/lib/libtvm_runtime.so \
+          /usr/local/lib/libtvm.so \
+    && ln -sf /usr/local/lib/python3.11/site-packages/mlc_llm/lib/libtvm_runtime.so \
+              /usr/local/lib/python3.11/site-packages/tvm/lib/libtvm_runtime.so \
+    && { \
+         echo /usr/local/lib; \
+         echo /usr/local/lib/python3.11/site-packages/mlc_llm/lib; \
+         echo /usr/local/lib/python3.11/site-packages/tvm_ffi/lib; \
+         echo /usr/local/lib/python3.11/site-packages/mlc_ai_nightly_cpu.libs; \
+         echo /usr/local/lib/python3.11/site-packages/mlc_llm_nightly_cpu.libs; \
+       } > /etc/ld.so.conf.d/mlc.conf \
+    && ldconfig
+
+ENV LD_LIBRARY_PATH=/usr/local/lib
+
+WORKDIR /work

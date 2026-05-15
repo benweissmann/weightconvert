@@ -1,0 +1,5 @@
+packages:
+  - .
+
+settings:
+  minimum-release-age: "5 days"
