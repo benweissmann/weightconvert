@@ -115,6 +115,20 @@ async function loadModel() {
     ],
   };
 
+  // Check WebGPU availability before attempting to load
+  if (!('gpu' in navigator)) {
+    throw new Error('WebGPU is not available in this browser. Try Safari 16.4+ or Chrome.')
+  }
+  const adapter = await navigator.gpu.requestAdapter()
+  if (!adapter) {
+    throw new Error('No WebGPU adapter found — your device or browser may not support it.')
+  }
+  const hasF16 = adapter.features.has('shader-f16')
+  console.log('[worker-b] WebGPU adapter found, shader-f16:', hasF16)
+  if (!hasF16) {
+    throw new Error('Your GPU does not support shader-f16, which this model requires. Try a newer device.')
+  }
+
   // CreateMLCEngine runs directly in this worker — no inner worker needed.
   engine = await webllm.CreateMLCEngine(MLC_MODEL_ID, {
     appConfig,

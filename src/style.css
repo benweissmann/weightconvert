@@ -63,7 +63,12 @@ body {
   display: block;
   color: #4a7c59;
 }
-/* failed: show nothing */
+/* failed: show × in muted terracotta */
+.slm-status[data-state="failed"] .slm-icon-failed {
+  display: block;
+  color: var(--accent);
+  opacity: 0.5;
+}
 @keyframes slm-spin {
   to { transform: rotate(360deg); }
 }

@@ -69,6 +69,8 @@ function startPipelineB() {
       if (input.value.trim()) maybeRunPipelineB(input.value)
     } else if (msg.type === 'load:error') {
       setSlmStatus('failed')
+      slmStatus.title = `Language model unavailable: ${msg.error}`
+      console.warn('[slm] load error:', msg.error)
     } else if (msg.type === 'parse:result') {
       if (msg.id !== pendingBId) return
       handlePipelineBResult(msg)
