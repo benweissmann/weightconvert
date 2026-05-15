@@ -29,14 +29,18 @@ body {
 }
 
 /* ─── App shell ────────────────────────────────────────────────────────────── */
+/* --vvh is set by JS from visualViewport.height so the app shrinks when the
+   iOS keyboard appears (the browser doesn't resize the layout viewport). */
+:root { --vvh: 100dvh; }
+
 .app {
   display: flex;
   flex-direction: column;
-  min-height: 100dvh;
-  min-height: 100vh;
+  height: var(--vvh);        /* exact height — no overflow */
   max-width: 540px;
   margin: 0 auto;
   padding: 0 24px;
+  overflow: hidden;          /* prevent iOS scroll-to-input from shifting layout */
 }
 
 /* ─── SLM status indicator — fixed top-right ──────────────────────────────── */
@@ -92,6 +96,8 @@ body {
   justify-content: center;
   padding: 32px 0 16px;
   min-height: 0;
+  overflow-y: auto;            /* scroll if content taller than available space */
+  overscroll-behavior: contain;
 }
 
 /* ─── Empty state ──────────────────────────────────────────────────────────── */
@@ -227,6 +233,7 @@ body {
    visible at the top via position:sticky, even if content overflows. */
 .debug-panel[open] {
   max-height: 60vh;
+  overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
 }
@@ -307,6 +314,9 @@ body {
   padding: 2px 0;
   font-family: var(--font-mono);
   font-size: 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .debug-source {
@@ -383,9 +393,9 @@ body {
 
 /* ─── Input bar ────────────────────────────────────────────────────────────── */
 .input-bar {
-  position: sticky;
-  bottom: 0;
-  padding: 12px 0 max(20px, env(safe-area-inset-bottom));
+  /* Not sticky/fixed — just a normal flex child at the bottom.
+     The app's overflow:hidden + exact --vvh height keeps it pinned. */
+  padding: 12px 0 max(16px, env(safe-area-inset-bottom));
   background: linear-gradient(to bottom, transparent, var(--bg) 30%);
   flex-shrink: 0;
 }

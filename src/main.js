@@ -359,18 +359,23 @@ document.querySelectorAll('.example-chip').forEach(btn => {
   })
 })
 
-// ─── Keyboard detection ───────────────────────────────────────────────────────
-// When the software keyboard opens, the visual viewport shrinks. Detect this
-// and apply .keyboard-open to compact the layout so the result stays visible.
-if (window.visualViewport) {
-  const baseHeight = window.visualViewport.height
-  window.visualViewport.addEventListener('resize', () => {
-    document.body.classList.toggle(
-      'keyboard-open',
-      window.visualViewport.height < baseHeight * 0.8
-    )
-  })
+// ─── Visual viewport tracking ─────────────────────────────────────────────────
+// On iOS the browser scrolls the layout viewport when the keyboard opens rather
+// than resizing it, so dvh/100vh stay full height and the content slides off.
+// We drive the app height from visualViewport.height instead, which DOES shrink.
+function updateVvh() {
+  const h = window.visualViewport?.height ?? window.innerHeight
+  document.documentElement.style.setProperty('--vvh', `${h}px`)
+  // Compact padding class when keyboard is open
+  const base = window._vvhBase ?? h
+  document.body.classList.toggle('keyboard-open', h < base * 0.8)
 }
+if (window.visualViewport) {
+  window._vvhBase = window.visualViewport.height
+  window.visualViewport.addEventListener('resize', updateVvh)
+  window.visualViewport.addEventListener('scroll', updateVvh)
+}
+updateVvh()
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 showState('empty')
