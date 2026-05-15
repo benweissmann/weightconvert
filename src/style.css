@@ -21,31 +21,29 @@ html {
   -webkit-text-size-adjust: 100%;
 }
 body {
+  position: fixed;
+  width: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
   background: var(--bg);
   color: var(--ink);
   font-family: var(--font-ui);
   font-weight: 300;
-  overscroll-behavior: none;
 }
 
 /* ─── App shell ────────────────────────────────────────────────────────────── */
-/* position:fixed is the only reliable way to prevent iOS Safari from scrolling
-   the page when a text input is focused. --vvh (set by JS) tracks the visual
-   viewport height so the app shrinks correctly when the keyboard opens. */
-:root { --vvh: 100dvh; }
-
 .app {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
-  height: var(--vvh);
   max-width: 540px;
   margin: 0 auto;
   padding: 0 24px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  /* no transform here — JS sets translateY to counteract iOS viewport pan */
 }
 
 /* ─── SLM status indicator — fixed top-right ──────────────────────────────── */

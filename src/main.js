@@ -360,22 +360,29 @@ document.querySelectorAll('.example-chip').forEach(btn => {
 })
 
 // ─── Visual viewport tracking ─────────────────────────────────────────────────
-// On iOS the browser scrolls the layout viewport when the keyboard opens rather
-// than resizing it, so dvh/100vh stay full height and the content slides off.
-// We drive the app height from visualViewport.height instead, which DOES shrink.
-function updateVvh() {
-  const h = window.visualViewport?.height ?? window.innerHeight
-  document.documentElement.style.setProperty('--vvh', `${h}px`)
-  // Compact padding class when keyboard is open
-  const base = window._vvhBase ?? h
-  document.body.classList.toggle('keyboard-open', h < base * 0.8)
+// iOS Safari does two things when a text input is focused:
+//   1. Scrolls the layout viewport (window.scrollY increases)
+//   2. Pans the visual viewport (visualViewport.offsetTop increases)
+// body { position: fixed } stops (1). To stop (2) we counteract the pan with
+// translateY(offsetTop) and resize the app to visualViewport.height.
+const appEl = document.querySelector('.app')
+const _vvhBase = window.visualViewport?.height ?? window.innerHeight
+
+function updateViewport() {
+  const vv = window.visualViewport
+  if (!vv) return
+  // Shrink app to keyboard-adjusted visible height
+  appEl.style.height = vv.height + 'px'
+  // Counteract iOS visual-viewport pan (offsetTop > 0 when page was panned up)
+  appEl.style.transform = vv.offsetTop ? `translateY(${vv.offsetTop}px)` : ''
+  document.body.classList.toggle('keyboard-open', vv.height < _vvhBase * 0.8)
 }
+
 if (window.visualViewport) {
-  window._vvhBase = window.visualViewport.height
-  window.visualViewport.addEventListener('resize', updateVvh)
-  window.visualViewport.addEventListener('scroll', updateVvh)
+  window.visualViewport.addEventListener('resize', updateViewport)
+  window.visualViewport.addEventListener('scroll', updateViewport)
 }
-updateVvh()
+updateViewport()
 
 // ─── Init ─────────────────────────────────────────────────────────────────────
 showState('empty')
