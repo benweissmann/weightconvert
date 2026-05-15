@@ -23,11 +23,12 @@ console.log('[worker-b] webllm imported')
 const MLC_MODEL_ID  = "weightconvert-smollm2-135m-mlc";
 // Construct absolute URL — web workers require absolute URLs for fetch.
 // VITE_MODEL_BASE_URL is empty in dev (serve from same origin at /model/).
+// VITE_MODEL_BASE_URL points at the model/ dir (e.g. https://s3.../dist-v1/model).
+// We append /resolve/main/ so web-llm's cleanModelUrl() passes the URL through
+// unchanged (it only adds resolve/main/ when that path isn't already present).
+// In dev, falls back to same origin at /model/resolve/main/ (Vite middleware strips the prefix).
 const _modelBase = (import.meta.env.VITE_MODEL_BASE_URL ?? '').replace(/\/$/, '');
-// web-llm's cleanModelUrl() appends "resolve/main/" to any URL that doesn't
-// already contain it (designed for HuggingFace URLs). Include it upfront so
-// the URL passes through unchanged, then the Vite middleware strips it.
-const MLC_MODEL_URL = (_modelBase || self.location.origin) + '/model/resolve/main/';
+const MLC_MODEL_URL = (_modelBase || (self.location.origin + '/model')) + '/resolve/main/';
 
 const SYSTEM_PROMPT =
   "You are a baking ingredient parser. " +

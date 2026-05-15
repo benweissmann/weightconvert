@@ -14,12 +14,18 @@ dist-v1/
     units.json
     aliases.json
   model/
-    mlc-chat-config.json
-    tokenizer.json
-    tokenizer_config.json
-    params_shard_0.bin … params_shard_N.bin
-    tensor-cache.json
+    resolve/main/          ← web-llm requires this path prefix
+      mlc-chat-config.json
+      tokenizer.json
+      tokenizer_config.json
+      params_shard_0.bin … params_shard_N.bin
+      tensor-cache.json
 ```
+
+> **Why `resolve/main/`?** web-llm's internal `cleanModelUrl` appends `resolve/main/` to any
+> URL that doesn't already contain it (originally designed for HuggingFace repos).
+> We include it in `VITE_MODEL_BASE_URL` so the path passes through unchanged, which
+> means the files on S3 must also live under that prefix.
 
 Upload data files after re-scraping or updating aliases:
 ```bash
@@ -29,7 +35,7 @@ aws s3 sync data/ s3://codes.fuzzy.convert/dist-v1/data/ \
 
 Upload model files after re-running conversion (see [FINETUNE.md](FINETUNE.md)):
 ```bash
-aws s3 sync finetune/mlc-model/ s3://codes.fuzzy.convert/dist-v1/model/
+aws s3 sync finetune/mlc-model/ s3://codes.fuzzy.convert/dist-v1/model/resolve/main/
 ```
 
 ## S3 CORS configuration
@@ -77,7 +83,9 @@ convert.fuzzy.codes  CNAME  benweissmann.github.io
 | Name | Value |
 |---|---|
 | `VITE_DATA_BASE_URL` | `https://s3.us-east-1.amazonaws.com/codes.fuzzy.convert/dist-v1` |
-| `VITE_MODEL_BASE_URL` | `https://s3.us-east-1.amazonaws.com/codes.fuzzy.convert/dist-v1` |
+| `VITE_MODEL_BASE_URL` | `https://s3.us-east-1.amazonaws.com/codes.fuzzy.convert/dist-v1/model` |
+
+Note: `VITE_MODEL_BASE_URL` points at the `model/` subdirectory. The worker appends `/resolve/main/` automatically (required by web-llm's URL handling), so model files must be uploaded to `dist-v1/model/resolve/main/` on S3.
 
 These are repository **variables** (not secrets) — they're not sensitive.
 
